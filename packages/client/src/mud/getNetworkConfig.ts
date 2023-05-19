@@ -26,9 +26,10 @@ export async function getNetworkConfig(): Promise<NetworkConfig> {
     throw new Error(`No world address found for chain ${chainId}. Did you run \`mud deploy\`?`);
   }
 
-  const initialBlockNumber = params.has("initialBlockNumber")
-    ? Number(params.get("initialBlockNumber"))
-    : world?.blockNumber ?? -1; // -1 will attempt to find the block number from RPC
+  const initialBlockNumber = 17295542;
+  // const initialBlockNumber = params.has("initialBlockNumber")
+  //   ? Number(params.get("initialBlockNumber"))
+  //   : world?.blockNumber ?? -1; // -1 will attempt to find the block number from RPC
 
   return {
     clock: {

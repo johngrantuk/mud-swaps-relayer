@@ -3,12 +3,13 @@ import { useMUD } from "./MUDContext";
 
 export const App = () => {
   const {
-    components: { Counter },
+    components: { Counter, AddressBook },
     systemCalls: { increment },
     network: { singletonEntity },
   } = useMUD();
 
   const counter = useComponentValue(Counter, singletonEntity);
+  const addressBook = useComponentValue(AddressBook, singletonEntity);
 
   return (
     <>
@@ -24,6 +25,9 @@ export const App = () => {
       >
         Increment
       </button>
+      <div>
+        Addr: <span>{addressBook?.value ?? "??"}</span>
+      </div>
     </>
   );
 };

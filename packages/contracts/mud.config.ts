@@ -6,5 +6,9 @@ export default mudConfig({
       keySchema: {},
       schema: "uint32",
     },
+    AddressBook: {
+      schema: "address",
+      keySchema: {}
+    },
   },
 });

@@ -1,13 +1,10 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Contract } from '@ethersproject/contracts';
+import { newRelayer, testAccount, balancerVaultAddr } from './constants';
 
 import vaultAbi from './abis/vaultAbi.json';
 import relayerAbi from '../../contracts/out/BalancerRelayer.sol/BalancerRelayer.abi.json'
 import relayerLibraryAbi from '../../contracts/out/RelayerLibrarySystem.sol/RelayerLibrarySystem.abi.json';
-
-const testAccount = '0xdf330Ccb1d8fE97D176850BC127D0101cBe4e932';
-const balancerVaultAddr = "0xBA12222222228d8Ba445958a75a0704d566BF2C8";
-const newRelayer = "0x4b35601e56eb18a3ea64bc7ce2381e102436f157";
 
 async function makeSwap() {
     console.log('making swap...');

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "auth": "npx ts-node -P tsconfig.json ./src/balancerAuth.ts",
+    "swap": "npx ts-node -P tsconfig.json ./src/swap.ts"
   },
   "keywords": [],
   "author": "",

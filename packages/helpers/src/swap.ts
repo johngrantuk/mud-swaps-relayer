@@ -3,11 +3,11 @@ import { Contract } from '@ethersproject/contracts';
 
 import vaultAbi from './abis/vaultAbi.json';
 import relayerAbi from '../../contracts/out/BalancerRelayer.sol/BalancerRelayer.abi.json'
-import relayerLibraryAbi from '../../contracts/out/IncrementSystem.sol/IncrementSystem.abi.json';
+import relayerLibraryAbi from '../../contracts/out/RelayerLibrarySystem.sol/RelayerLibrarySystem.abi.json';
 
 const testAccount = '0xdf330Ccb1d8fE97D176850BC127D0101cBe4e932';
 const balancerVaultAddr = "0xBA12222222228d8Ba445958a75a0704d566BF2C8";
-const newRelayer = "0x14ddc655a2f48cc0a4160a8c59b33ad6b67de05e";
+const newRelayer = "0x4b35601e56eb18a3ea64bc7ce2381e102436f157";
 
 async function makeSwap() {
     console.log('making swap...');
@@ -57,6 +57,7 @@ async function makeSwap() {
       deadline,
       '0',
     ]);
+    console.log(encodedSwap);
     const relayer = new Contract(newRelayer, relayerAbi, signer);
     const relayerTxSim = await relayer.callStatic.multicall([encodedSwap]);
     console.log(relayerTxSim);

@@ -1,29 +1,13 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "@balancer-labs/v2-interfaces/contracts/standalone-utils/IBalancerRelayer.sol";
-
-// import "@balancer-labs/v2-solidity-utils/contracts/openzeppelin/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 /**
- * @title Balancer Relayer
- * @notice Allows safe multicall execution of a relayer's functions
- * @dev
+ * Taken from Balancer contracts: https://github.com/balancer/balancer-v2-monorepo/blob/master/pkg/standalone-utils/contracts/relayer/BalancerRelayer.sol
+ * This only has VERY basic functionality and limited safety checks - just a PoC to see how to adapt to MUD.
+ *
  * Relayers are composed of two contracts:
  *  - This contract, which acts as a single point of entry into the system through a multicall function.
  *  - A library contract, which defines the allowed behaviour of the relayer.

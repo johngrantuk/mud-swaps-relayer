@@ -1,7 +1,7 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Contract } from '@ethersproject/contracts';
 
-import authoriserAbi from '../authoriserAbi.json';
+import authoriserAbi from './abis/authoriserAbi.json';
 
 const authoriserAddr = '0xA331D84eC860Bf466b4CdCcFb4aC09a1B43F3aE6';
 const governanceSafeAddr = '0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f';

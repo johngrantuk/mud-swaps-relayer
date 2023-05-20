@@ -1,7 +1,7 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { Contract } from '@ethersproject/contracts';
 
-import vaultAbi from '../vaultAbi.json';
+import vaultAbi from './abis/vaultAbi.json';
 import relayerAbi from '../../contracts/out/BalancerRelayer.sol/BalancerRelayer.abi.json'
 import relayerLibraryAbi from '../../contracts/out/IncrementSystem.sol/IncrementSystem.abi.json';
 

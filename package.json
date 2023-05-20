@@ -10,7 +10,8 @@
     "initialize": "pnpm recursive run initialize",
     "mud:up": "pnpm recursive exec mud set-version -v canary && pnpm install",
     "prepare": "(forge --version || pnpm foundry:up)",
-    "test": "pnpm recursive run test"
+    "test": "pnpm recursive run test",
+    "node": "anvil -b 1 --block-base-fee-per-gas 0 --chain-id 31337 --fork-block-number 17295542 -f $(. ./.env && echo $ALCHEMY_URL)"
   },
   "devDependencies": {
     "@latticexyz/cli": "2.0.0-alpha.1.159+59588ab6",

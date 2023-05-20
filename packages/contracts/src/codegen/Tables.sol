@@ -5,3 +5,4 @@ pragma solidity >=0.8.0;
 
 import { Counter, CounterTableId } from "./tables/Counter.sol";
 import { AddressBook, AddressBookTableId } from "./tables/AddressBook.sol";
+import { Swap, SwapData, SwapTableId } from "./tables/Swap.sol";

@@ -1,5 +1,5 @@
 // This should be the address of deployed Relayer entry point
-export const newRelayer = "0x4b35601e56eb18a3ea64bc7ce2381e102436f157";
+export const newRelayer = "0x840748F7Fd3EA956E5f4c88001da5CC1ABCBc038";
 
 export const testAccount = '0xdf330Ccb1d8fE97D176850BC127D0101cBe4e932';
 export const balancerVaultAddr = "0xBA12222222228d8Ba445958a75a0704d566BF2C8";

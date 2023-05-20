@@ -10,5 +10,12 @@ export default mudConfig({
       schema: "address",
       keySchema: {}
     },
+    Swap: {
+      schema: {
+        assetIn: "address",
+        assetOut: "address",
+        amount: "uint256"
+      }
+    }
   },
 });

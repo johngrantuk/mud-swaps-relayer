@@ -2,7 +2,7 @@
 pragma solidity >=0.8.0;
 
 import { System } from "@latticexyz/world/src/System.sol";
-import { Counter, AddressBook } from "../codegen/Tables.sol";
+import { Counter, AddressBook, Swap } from "../codegen/Tables.sol";
 import "./balancer/BalancerRelayer.sol";
 import { IVault } from "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
 import "@balancer-labs/v2-interfaces/contracts/standalone-utils/IBalancerRelayer.sol";
@@ -43,6 +43,8 @@ contract RelayerLibrarySystem is System {
     ) external payable returns (uint256) {
         require(funds.sender == msg.sender || funds.sender == address(this), "Incorrect sender");
         uint256 result = getVault().swap{ value: value }(singleSwap, funds, limit, deadline);
+        bytes32 key = bytes32(abi.encodePacked(block.number, msg.sender, gasleft()));
+        Swap.set(key, address(singleSwap.assetIn), address(singleSwap.assetOut), singleSwap.amount);
         return result;
   }
 

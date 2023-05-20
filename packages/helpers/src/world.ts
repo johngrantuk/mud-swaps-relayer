@@ -1,19 +1,45 @@
 import { JsonRpcProvider } from '@ethersproject/providers';
+import { IWorld__factory } from "../../contracts/types/ethers-contracts/factories/IWorld__factory";
 import { Contract } from '@ethersproject/contracts';
+
+import worldsJson from "../../contracts/worlds.json";
+import vaultAbi from './abis/vaultAbi.json';
+
 import { newRelayer, testAccount, balancerVaultAddr } from './constants';
 
-import vaultAbi from './abis/vaultAbi.json';
-import relayerAbi from '../../contracts/out/BalancerRelayer.sol/BalancerRelayer.abi.json'
-import relayerLibraryAbi from '../../contracts/out/RelayerLibrarySystem.sol/RelayerLibrarySystem.abi.json';
+const worlds = worldsJson as Partial<Record<string, { address: string; blockNumber?: number }>>;
 
-async function makeSwap() {
-    console.log('making swap...');
+async function world() {
     const rpcUrl = `http://127.0.0.1:8545`;
     const provider = new JsonRpcProvider(rpcUrl);
 
     // We impersonate the Balancer Governance Safe address as it is authorised to grant roles
     await provider.send('hardhat_impersonateAccount', [testAccount]);
     const signer = provider.getSigner(testAccount);
+    const world = worlds['31337'];
+    const worldAddress = world?.address || '';
+    console.log(`World Address: `, world?.address);
+
+    // Create a World contract instance
+    const worldContract = IWorld__factory.connect(worldAddress, signer);
+
+    const test = await worldContract.increment();
+    console.log(test);
+}
+
+async function worldSwap() {
+    const rpcUrl = `http://127.0.0.1:8545`;
+    const provider = new JsonRpcProvider(rpcUrl);
+
+    // We impersonate the Balancer Governance Safe address as it is authorised to grant roles
+    await provider.send('hardhat_impersonateAccount', [testAccount]);
+    const signer = provider.getSigner(testAccount);
+    const world = worlds['31337'];
+    const worldAddress = world?.address || '';
+    console.log(`World Address: `, world?.address);
+
+    // Create a World contract instance
+    const worldContract = IWorld__factory.connect(worldAddress, signer);
 
     const vault = new Contract(balancerVaultAddr, vaultAbi, signer);
 
@@ -42,25 +68,10 @@ async function makeSwap() {
     const swapTxSim = await vault.callStatic.swap(singleSwap, funds, limit, deadline);
     console.log(swapTxSim.toString());
     console.log(swapTxSim.toHexString());
-    // const swapTx = await vault.swap(singleSwap, funds, limit, deadline);
-    // const receipt = await swapTx.wait();
-    // console.log(receipt);
 
-    const relayerLibrary = new Contract(newRelayer, relayerLibraryAbi, signer);
-    const encodedSwap = relayerLibrary.interface.encodeFunctionData('swap', [
-      singleSwap,
-      funds,
-      limit,
-      deadline,
-      '0',
-    ]);
-    console.log(encodedSwap);
-    const relayer = new Contract(newRelayer, relayerAbi, signer);
-    const relayerTxSim = await relayer.callStatic.multicall([encodedSwap]);
-    // const relayerTxSim = await relayer.multicall([encodedSwap]);
-    // const r = await relayerTxSim.wait();
-    console.log(relayerTxSim);
+    const test = await worldContract.swap(singleSwap, funds, limit, deadline, '0');
+    console.log(test);
 }
 
-// npx ts-node -P tsconfig.json ./src/swap.ts
-makeSwap();
+// npx ts-node -P tsconfig.json ./src/world.ts
+worldSwap();

@@ -35,5 +35,22 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
+    Swap: (() => {
+      const tableId = new TableId("", "Swap");
+      return defineComponent(
+        world,
+        {
+          assetIn: RecsType.String,
+          assetOut: RecsType.String,
+          amount: RecsType.BigInt,
+        },
+        {
+          metadata: {
+            contractId: tableId.toHexString(),
+            tableId: tableId.toString(),
+          },
+        }
+      );
+    })(),
   };
 }

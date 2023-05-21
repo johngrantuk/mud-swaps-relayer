@@ -9,19 +9,17 @@ export const App = () => {
     network: { storeCache },
   } = useMUD();
 
-  const cacti = [1];
-
   const toggle = () => {
-    cacti.push(1);
-    console.log(`TEST`, cacti.length);
+    console.log(`TEST`);
   }
 
   const swaps = useRows(storeCache, { table: "Swap" });
+  const cacti = swaps.map((s, i) => i);
   console.log(swaps.length);
   
   return (
     <>
-      {/* <Dino cacti={cacti}/> */}
+      {<Dino cacti={cacti}/>}
       <hr/>
       <button
         type="button"

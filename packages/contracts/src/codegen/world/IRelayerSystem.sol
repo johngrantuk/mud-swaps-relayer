@@ -5,7 +5,7 @@ pragma solidity >=0.8.0;
 
 import { IVault } from "@balancer-labs/v2-interfaces/contracts/vault/IVault.sol";
 
-interface IRelayerLibrarySystem {
+interface IRelayerSystem {
   function getVault() external view returns (IVault);
 
   function swap(
@@ -15,8 +15,4 @@ interface IRelayerLibrarySystem {
     uint256 deadline,
     uint256 value
   ) external payable returns (uint256);
-
-  function updateEntryPoint() external returns (address);
-
-  function increment() external returns (uint32);
 }

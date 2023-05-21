@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "auth": "npx ts-node -P tsconfig.json ./src/balancerAuth.ts",
-    "swap": "npx ts-node -P tsconfig.json ./src/swap.ts"
+    "swap": "npx ts-node -P tsconfig.json ./src/worldSwap.ts"
   },
   "keywords": [],
   "author": "",

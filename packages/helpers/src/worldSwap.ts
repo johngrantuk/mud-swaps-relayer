@@ -9,24 +9,6 @@ import { newRelayer, testAccount, balancerVaultAddr } from './constants';
 
 const worlds = worldsJson as Partial<Record<string, { address: string; blockNumber?: number }>>;
 
-async function world() {
-    const rpcUrl = `http://127.0.0.1:8545`;
-    const provider = new JsonRpcProvider(rpcUrl);
-
-    // We impersonate the Balancer Governance Safe address as it is authorised to grant roles
-    await provider.send('hardhat_impersonateAccount', [testAccount]);
-    const signer = provider.getSigner(testAccount);
-    const world = worlds['31337'];
-    const worldAddress = world?.address || '';
-    console.log(`World Address: `, world?.address);
-
-    // Create a World contract instance
-    const worldContract = IWorld__factory.connect(worldAddress, signer);
-
-    const test = await worldContract.increment();
-    console.log(test);
-}
-
 async function worldSwap() {
     const rpcUrl = `http://127.0.0.1:8545`;
     const provider = new JsonRpcProvider(rpcUrl);
@@ -73,5 +55,5 @@ async function worldSwap() {
     console.log(test);
 }
 
-// npx ts-node -P tsconfig.json ./src/world.ts
+// npx ts-node -P tsconfig.json ./src/worldSwap.ts
 worldSwap();

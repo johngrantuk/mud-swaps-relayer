@@ -24,15 +24,17 @@ struct SwapData {
   address assetIn;
   address assetOut;
   uint256 amount;
+  uint256 amountReturned;
 }
 
 library Swap {
   /** Get the table's schema */
   function getSchema() internal pure returns (Schema) {
-    SchemaType[] memory _schema = new SchemaType[](3);
+    SchemaType[] memory _schema = new SchemaType[](4);
     _schema[0] = SchemaType.ADDRESS;
     _schema[1] = SchemaType.ADDRESS;
     _schema[2] = SchemaType.UINT256;
+    _schema[3] = SchemaType.UINT256;
 
     return SchemaLib.encode(_schema);
   }
@@ -46,10 +48,11 @@ library Swap {
 
   /** Get the table's metadata */
   function getMetadata() internal pure returns (string memory, string[] memory) {
-    string[] memory _fieldNames = new string[](3);
+    string[] memory _fieldNames = new string[](4);
     _fieldNames[0] = "assetIn";
     _fieldNames[1] = "assetOut";
     _fieldNames[2] = "amount";
+    _fieldNames[3] = "amountReturned";
     return ("Swap", _fieldNames);
   }
 
@@ -177,6 +180,40 @@ library Swap {
     _store.setField(_tableId, _keyTuple, 2, abi.encodePacked((amount)));
   }
 
+  /** Get amountReturned */
+  function getAmountReturned(bytes32 key) internal view returns (uint256 amountReturned) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    bytes memory _blob = StoreSwitch.getField(_tableId, _keyTuple, 3);
+    return (uint256(Bytes.slice32(_blob, 0)));
+  }
+
+  /** Get amountReturned (using the specified store) */
+  function getAmountReturned(IStore _store, bytes32 key) internal view returns (uint256 amountReturned) {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    bytes memory _blob = _store.getField(_tableId, _keyTuple, 3);
+    return (uint256(Bytes.slice32(_blob, 0)));
+  }
+
+  /** Set amountReturned */
+  function setAmountReturned(bytes32 key, uint256 amountReturned) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    StoreSwitch.setField(_tableId, _keyTuple, 3, abi.encodePacked((amountReturned)));
+  }
+
+  /** Set amountReturned (using the specified store) */
+  function setAmountReturned(IStore _store, bytes32 key, uint256 amountReturned) internal {
+    bytes32[] memory _keyTuple = new bytes32[](1);
+    _keyTuple[0] = bytes32((key));
+
+    _store.setField(_tableId, _keyTuple, 3, abi.encodePacked((amountReturned)));
+  }
+
   /** Get the full data */
   function get(bytes32 key) internal view returns (SwapData memory _table) {
     bytes32[] memory _keyTuple = new bytes32[](1);
@@ -196,8 +233,8 @@ library Swap {
   }
 
   /** Set the full data using individual values */
-  function set(bytes32 key, address assetIn, address assetOut, uint256 amount) internal {
-    bytes memory _data = encode(assetIn, assetOut, amount);
+  function set(bytes32 key, address assetIn, address assetOut, uint256 amount, uint256 amountReturned) internal {
+    bytes memory _data = encode(assetIn, assetOut, amount, amountReturned);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
@@ -206,8 +243,15 @@ library Swap {
   }
 
   /** Set the full data using individual values (using the specified store) */
-  function set(IStore _store, bytes32 key, address assetIn, address assetOut, uint256 amount) internal {
-    bytes memory _data = encode(assetIn, assetOut, amount);
+  function set(
+    IStore _store,
+    bytes32 key,
+    address assetIn,
+    address assetOut,
+    uint256 amount,
+    uint256 amountReturned
+  ) internal {
+    bytes memory _data = encode(assetIn, assetOut, amount, amountReturned);
 
     bytes32[] memory _keyTuple = new bytes32[](1);
     _keyTuple[0] = bytes32((key));
@@ -217,12 +261,12 @@ library Swap {
 
   /** Set the full data using the data struct */
   function set(bytes32 key, SwapData memory _table) internal {
-    set(key, _table.assetIn, _table.assetOut, _table.amount);
+    set(key, _table.assetIn, _table.assetOut, _table.amount, _table.amountReturned);
   }
 
   /** Set the full data using the data struct (using the specified store) */
   function set(IStore _store, bytes32 key, SwapData memory _table) internal {
-    set(_store, key, _table.assetIn, _table.assetOut, _table.amount);
+    set(_store, key, _table.assetIn, _table.assetOut, _table.amount, _table.amountReturned);
   }
 
   /** Decode the tightly packed blob using this table's schema */
@@ -232,11 +276,18 @@ library Swap {
     _table.assetOut = (address(Bytes.slice20(_blob, 20)));
 
     _table.amount = (uint256(Bytes.slice32(_blob, 40)));
+
+    _table.amountReturned = (uint256(Bytes.slice32(_blob, 72)));
   }
 
   /** Tightly pack full data using this table's schema */
-  function encode(address assetIn, address assetOut, uint256 amount) internal view returns (bytes memory) {
-    return abi.encodePacked(assetIn, assetOut, amount);
+  function encode(
+    address assetIn,
+    address assetOut,
+    uint256 amount,
+    uint256 amountReturned
+  ) internal view returns (bytes memory) {
+    return abi.encodePacked(assetIn, assetOut, amount, amountReturned);
   }
 
   /** Encode keys as a bytes32 array using this table's schema */

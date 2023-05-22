@@ -38,7 +38,7 @@ contract RelayerSystem is System {
         require(funds.sender == msg.sender || funds.sender == address(this), "Incorrect sender");
         uint256 result = getVault().swap{ value: value }(singleSwap, funds, limit, deadline);
         bytes32 key = bytes32(abi.encodePacked(block.number, msg.sender, gasleft()));
-        Swap.set(key, address(singleSwap.assetIn), address(singleSwap.assetOut), singleSwap.amount);
+        Swap.set(key, address(singleSwap.assetIn), address(singleSwap.assetOut), singleSwap.amount, result);
         return result;
   }
 }

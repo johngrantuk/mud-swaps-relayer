@@ -13,6 +13,7 @@ export function defineContractComponents(world: World) {
           assetIn: RecsType.String,
           assetOut: RecsType.String,
           amount: RecsType.BigInt,
+          amountReturned: RecsType.BigInt,
         },
         {
           metadata: {

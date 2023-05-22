@@ -6,7 +6,8 @@ export default mudConfig({
       schema: {
         assetIn: "address",
         assetOut: "address",
-        amount: "uint256"
+        amount: "uint256",
+        amountReturned: "uint256"
       }
     }
   },

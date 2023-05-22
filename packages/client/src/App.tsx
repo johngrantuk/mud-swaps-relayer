@@ -40,7 +40,7 @@ export const App = () => {
       <ul>
         {swaps.map(({ value }, increment) => (
           <li key={increment}>
-            {value.assetIn}, {value.assetOut} {value.amount.toString()}
+            Amount In: {value.amount.toString()} Amount Out: {value.amountReturned.toString()}
           </li>
         ))}
       </ul>

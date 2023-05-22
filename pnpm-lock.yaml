@@ -162,6 +162,9 @@ importers:
 
   packages/helpers:
     devDependencies:
+      '@ethersproject/bignumber':
+        specifier: ^5.7.0
+        version: 5.7.0
       '@ethersproject/contracts':
         specifier: ^5.7.0
         version: 5.7.0

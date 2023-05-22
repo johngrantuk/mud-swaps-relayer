@@ -4,7 +4,6 @@ import Dino from "./dino/dino";
 
 export const App = () => {
   const {
-    // components: { Counter, AddressBook },
     systemCalls: { worldSwap },
     network: { storeCache },
   } = useMUD();
